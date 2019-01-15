@@ -1,4 +1,4 @@
-[Patchwork repo] (https://github.com/lengyeltamas/patchwork´)
+[Patchwork repo](https://github.com/lengyeltamas/patchwork)
 
 [git-lesson-repository](https://github.com/lengyeltamas/git-lesson-repository)
 
