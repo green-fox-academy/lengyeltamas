@@ -1,5 +1,5 @@
-<https://github.com/lengyeltamas/patchwork>
+[Patchwork repo] (https://github.com/lengyeltamas/patchwork´)
 
-<https://github.com/lengyeltamas/git-lesson-repository>
+[git-lesson-repository](https://github.com/lengyeltamas/git-lesson-repository)
 
-<https://github.com/lengyeltamas/hello-world>
+[Hello-World](https://github.com/lengyeltamas/hello-world)
