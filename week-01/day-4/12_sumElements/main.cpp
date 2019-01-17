@@ -1,0 +1,16 @@
+#include <iostream>
+#include <string>
+
+int main(int argc, char* args[]) {
+
+    // - Create an array variable named `r`
+    //   with the following content: `[54, 23, 66, 12]`
+    // - Print the sum of the second and the third element
+
+    int r [4] = { 54, 23, 66, 12 };
+
+    std::cout << "The sum of the second and third element of 'r' array: " << r[1] + r[2] << std::endl;
+
+
+    return 0;
+}
