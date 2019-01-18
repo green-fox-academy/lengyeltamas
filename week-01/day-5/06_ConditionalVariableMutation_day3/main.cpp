@@ -65,9 +65,13 @@ int main(int argc, char* args[]) {
     // set out3 to "Time out"
     // otherwise set out3 to "Run Forest Run!"
 
-   if ()
-
-
+   if ( d % 4 == 0 && time <=200) {
+       out3 = "check";
+   } else {
+       if (time > 200) {
+           out3 = "Time Out";
+       } else { out3 = "Run Forest run!";}
+   }
 
     std::cout << out3 << std::endl;
 
