@@ -16,5 +16,21 @@ int main(int argc, char* args[]) {
     // 4
     // 5
 
+    int num1;
+    int num2;
+
+    std::cout << "Tell me two numbers and I'll count between them" << std::endl;
+    std::cin >> num1;
+    std::cin >> num2;
+
+    if (num1 > num2) {
+        std::cout << "The second number should be bigger..." << std::endl;
+    } else {
+
+        for (int i = num1; i < num2; i++ ) {
+            std::cout << i << std::endl;
+        }
+    }
+
     return 0;
 }
