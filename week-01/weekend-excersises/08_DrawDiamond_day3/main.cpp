@@ -16,23 +16,25 @@ int main(int argc, char* args[]) {
     //
     // The diamond should have as many lines as the number was
 
-    double num;
+    int num;
 
-    std::cout << "How big diamonds do you like, Bae?" << std::endl;
+    std::cout << "How big diamond would you like, Bae?" << std::endl;
     std::cin >> num;
 
-    for (double i = 0; i > num; i++) {
-        if (i < (num / 2)) {
-            for (double j = i; j <= num; j++) {
-                std::cout << " ";
-            }
-            for (double k = 0; )
+    int evennum;
+    int oddnum;
 
-        } else {
-
-
-        } std::cout << "\n";
+    if (num % 2 == 0) {
+        num = evennum;
+    } else {
+        num = oddnum;
     }
+
+   for (int i = 0; i <= evennum; i++) {
+       if (i <= ((evennum / 2) + 1) {
+
+       }
+   }
 
     return 0;
 }
