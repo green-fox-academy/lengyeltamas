@@ -14,7 +14,7 @@ int main(int argc, char* args[]) {
 
     int num;
 
-    std::cout << "Give me a number" << std::endl;
+    std::cout << "Dude, how tall pyramid should I bulid for ya? " << std::endl;
     std::cin >> num;
 
     for (int i = 0; i <= num; i++) {
@@ -29,6 +29,8 @@ int main(int argc, char* args[]) {
 
         std::cout << "\n";
     }
+
+    std::cout << "\n     Sweeeeet" << std::endl;
 
 
     return 0;

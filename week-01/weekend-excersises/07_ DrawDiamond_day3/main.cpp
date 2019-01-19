@@ -16,10 +16,23 @@ int main(int argc, char* args[]) {
     //
     // The diamond should have as many lines as the number was
 
-    int num;
+    double num;
 
-    
+    std::cout << "How big diamonds do you like, Bae?" << std::endl;
+    std::cin >> num;
 
+    for (double i = 0; i > num; i++) {
+        if (i < (num / 2)) {
+            for (double j = i; j <= num; j++) {
+                std::cout << " ";
+            }
+            for (double k = 0; )
+
+        } else {
+
+
+        } std::cout << "\n";
+    }
 
     return 0;
 }
