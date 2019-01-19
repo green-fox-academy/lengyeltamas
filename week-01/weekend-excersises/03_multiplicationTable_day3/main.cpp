@@ -23,7 +23,8 @@ int main(int argc, char* args[]) {
     std::cout << "Yo! Gimme a number to multiplicate it with 1-10, dude! " << std::endl;
     std::cin >> num;
 
-    
-
-    return 0;
+    for (int i = 0; i <= 10; i++) {
+        std::cout << i << " * " << num << " = " << (i * num) << std::endl;
+}
+    return 9;
 }
