@@ -14,14 +14,22 @@ int main(int argc, char* args[]) {
 
     int num;
 
-    std::cout << "Give me a number: " << std::endl;
+    std::cout << "Give me a number" << std::endl;
     std::cin >> num;
 
     for (int i = 0; i <= num; i++) {
-        for (int j = 0; j < i; j++) {
-            std::cout << "*" ;
-        } std::cout << "\n";
+
+        for (int j = i; j <= num; j++) {
+            std::cout << " ";
+        }
+
+        for (int k = 0; k <= (i * 2); k++) {
+            std::cout << "*";
+        }
+
+        std::cout << "\n";
     }
+
 
     return 0;
 }
