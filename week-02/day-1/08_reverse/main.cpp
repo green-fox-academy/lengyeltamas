@@ -3,7 +3,11 @@
 
 std::string reverse(const std::string& text)
 {
-
+    std::string reverse2 (text);
+    for (int i = 0; i < (reverse2.size()/2); i++) {
+        std::swap(reverse2.at(i), reverse2.at(reverse2.size()-i-1));
+    }
+    return reverse2;
 }
 
 int main(int argc, char* args[])
