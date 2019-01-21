@@ -3,18 +3,12 @@
 
 std::string reverse(const std::string& text)
 {
-    std::string b;
-    std::string swap function;
 
-    for (int i = text.size()-1; i>=0; i--)
-        b+=text[i];
-    return b;
 }
 
 int main(int argc, char* args[])
 {
     std::string reversed = ".eslaf eb t'ndluow ecnetnes siht ,dehctiws erew eslaf dna eurt fo sgninaem eht fI";
-
 
     // Create a method that can reverse an std:string, which is passed as the parameter
     // Use it on this reversed string to check it!
