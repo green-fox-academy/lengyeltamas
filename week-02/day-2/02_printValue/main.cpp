@@ -9,7 +9,7 @@ int main ()
 
     int *agepointer = &age;
 
-    std::cout << "The value of the variable " <<
+    std::cout << "The value of the variable 'age' is: " << *agepointer << std::endl;
 
     return 0;
 }
