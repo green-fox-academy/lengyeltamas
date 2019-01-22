@@ -14,8 +14,7 @@ int main()
     // Create a function which takes an array (and it's length) and a number as a parameter
     // the function should return index where it found the given value
     // if it can't find the number return 0
-
-
+    
     //there was a typo up there ^ (lenght)
 
     int num;
