@@ -14,8 +14,20 @@ int main()
     int array[num];
 
     for (int i = 0; i < num; i++) {
-
+        std::cout << "Give me numbers for the array" << std::endl;
+        std::cin >> array[i];
     }
+
+
+    int temp = 0;
+    for (int i = 0; i < num; i++) {
+        if (array[i] > temp) {
+            temp = array[i];
+        }
+    }
+
+    std::cout << std::endl;
+    std::cout << "The largest element value in this array is: " << temp <<std::endl;
 
     return 0;
 }
