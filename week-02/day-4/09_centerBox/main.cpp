@@ -2,8 +2,8 @@
 #include <SDL.h>
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int SCREEN_WIDTH = 700;
+const int SCREEN_HEIGHT = 700;
 
 //Draws geometry on the canvas
 void draw();
@@ -20,35 +20,29 @@ SDL_Window* gWindow = nullptr;
 //The window renderer
 SDL_Renderer* gRenderer = nullptr;
 
-void help (int &par1, int &par2) {
+void drawaddition (int parameter) {
 
-    //choose color
-    SDL_SetRenderDrawColor(gRenderer, 0xFF, 0x00, 0x00, 0xFF);
-    //create a rectangle
-    SDL_Rect fillRect = {par2-20, par2+50, par1, par1};
-    //draw rectangle
-    SDL_RenderFillRect( gRenderer, &fillRect );
+    SDL_SetRenderDrawColor(gRenderer,255-(parameter % 150),255-(parameter % 150),255-(parameter % 150),255);
+
+    SDL_Rect drawrect{(SCREEN_WIDTH / 2) -(parameter/2), (SCREEN_HEIGHT / 2)-(parameter/2), parameter, parameter};
+
+    SDL_RenderDrawRect(gRenderer,&drawrect);
+
 }
 
 void draw()
 {
-    // create a square drawing function that takes 2 parameters:
-    // the x and y coordinates of the square's top left corner
-    // and draws a 50x50 square from that point.
-    // draw at least 3 squares with that function.
-    // avoid code duplication.
 
-    int par1 = 50;
-    int par2 = 50;
-
-    for (int i =1; i < 4; i++) {
-        par1;
-        par2 = par2*i;
-
-        help (par1, par2);
+    for (int i = 1; i < 900; i+=2) {
+        drawaddition (i);
     }
 
-
+    // create a square drawing function that takes 1 parameter:
+    // the square size
+    // and draws a square of that size to the center of the canvas.
+    // draw at least 3 squares with that function.
+    // the squares should not be filled otherwise they will hide each other
+    // avoid code duplication.
 }
 
 bool init()
@@ -61,7 +55,7 @@ bool init()
     }
 
     //Create window
-    gWindow = SDL_CreateWindow( "Position square", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+    gWindow = SDL_CreateWindow( "Center box function", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
     if( gWindow == nullptr )
     {
         std::cout << "Window could not be created! SDL Error: " << SDL_GetError() << std::endl;
