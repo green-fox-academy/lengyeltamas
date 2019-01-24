@@ -1,5 +1,6 @@
 #include <iostream>
 #include <SDL.h>
+#include <ctime>
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
@@ -33,10 +34,12 @@ void draw()
     int cordx = 10;
     int cordy = 50;
 
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 20; i++) {
 
-        cordx +=(i*50);
-        cordy +=(i*50);
+        srand(time(0));
+
+        cordx +=(i*500*(std::rand() % 5));
+        cordy +=(i*500*(std::rand() % 5));
 
         drawlinetocenter(cordx, cordy);
     }
