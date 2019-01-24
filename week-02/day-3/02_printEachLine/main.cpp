@@ -10,7 +10,7 @@ int main () {
 
     std::ofstream tomifile ("my-file.txt");
 
-    tomifile << "At \nthis \ntext \nfile \neach \nword \nis \nin \na \nnew \nline.";
+    tomifile << "How does it feel \nTo treat me like you do \nWhen you ve laid your hands upon me \nAnd told me who you are \nThought I was mistaken \nI thought I heard your words \nTell me, how do I feel \nTell me now how do I feel";
     tomifile.close();
 
     std::ifstream tomifile2 ("my-file.txt");
