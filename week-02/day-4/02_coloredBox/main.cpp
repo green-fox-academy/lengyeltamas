@@ -38,9 +38,9 @@ void draw()
     SDL_RenderDrawLine(gRenderer, 220, 290, 420, 290);
 
     //left side color
-    SDL_SetRenderDrawColor(gRenderer, 0xFF /*R*/, 0xFF /*G*/, 0xFF /*B*/, 0xFF /*A*/);
+    SDL_SetRenderDrawColor(gRenderer, 0x00 /*R*/, 0xFF /*G*/, 0xFF /*B*/, 0xFF /*A*/);
     //left side line
-    SDL_RenderDrawLine(gRenderer, 220, 190, 220, 190);
+    SDL_RenderDrawLine(gRenderer, 220, 190, 220, 290);
 
 
 
