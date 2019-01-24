@@ -1,6 +1,5 @@
 #include <iostream>
 #include <SDL.h>
-#include <ctime>
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
@@ -21,36 +20,17 @@ SDL_Window* gWindow = nullptr;
 //The window renderer
 SDL_Renderer* gRenderer = nullptr;
 
-
-void drawlinetocenter (int centerx, int centery) {
-
-    //choose color
-    SDL_SetRenderDrawColor(gRenderer, 0xFF /*R*/, 0x00 /*G*/, 0x00 /*B*/, 0xFF /*A*/);
-    //draw line
-    SDL_RenderDrawLine(gRenderer, centerx, centery, (SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
-}
-
 void draw()
 {
-       int cordx = 10;
-       int cordy = 50;
-
-       for (int i = 0; i < 20; i++) {
-
-            srand(time(0));
-
-           cordx +=(i*500*(std::rand() % 5));
-           cordy +=(i*500*(std::rand() % 5));
-
-           drawlinetocenter(cordx, cordy);
-       }
+    //choose color
+    SDL_SetRenderDrawColor(gRenderer, 0x00, 0xFF, 0x00, 0xFF);
+    //create a rectangle
+    SDL_Rect fillRect = { ((SCREEN_WIDTH /2)-50), ((SCREEN_HEIGHT /2)-50), 100, 100};
+    //draw rectangle
+    SDL_RenderFillRect( gRenderer, &fillRect );
 
 
-
-    // Create a line drawing function that takes 2 parameters:
-    // The x and y coordinates of the line's starting point
-    // and draws a line from that point to the center of the canvas.
-    // Draw at least 3 lines with that function. Use loop for that.
+    // Draw a green 100x100 square to the canvas' center.
 }
 
 bool init()
@@ -63,7 +43,7 @@ bool init()
     }
 
     //Create window
-    gWindow = SDL_CreateWindow( "Line in the middle", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+    gWindow = SDL_CreateWindow( "Centered square", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
     if( gWindow == nullptr )
     {
         std::cout << "Window could not be created! SDL Error: " << SDL_GetError() << std::endl;
