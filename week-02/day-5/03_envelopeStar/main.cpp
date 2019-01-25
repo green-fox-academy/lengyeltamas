@@ -22,38 +22,32 @@ SDL_Renderer* gRenderer = nullptr;
 
 void fun (int parameter) {
 
-    for (int i = 1; i < 5 ; i++) {
+    SDL_SetRenderDrawColor(gRenderer, 50, 205, 50, 0xFF);
 
-        if ( i % 2 == 0 ) {
+    SDL_RenderDrawLine(gRenderer, 0+parameter, (SCREEN_HEIGHT /2), (SCREEN_WIDTH /2), ((SCREEN_HEIGHT /2)-parameter) );
 
-            SDL_SetRenderDrawColor(gRenderer, 218, 112, 214, 0xFF);
+    SDL_SetRenderDrawColor(gRenderer, 50, 205, 50, 0xFF);
 
-            SDL_RenderDrawLine(gRenderer, (SCREEN_WIDTH/2), (-200+(i*(SCREEN_HEIGHT/4)+parameter)), ((SCREEN_WIDTH/2)+parameter), ((SCREEN_HEIGHT/4)*i));
+    SDL_RenderDrawLine(gRenderer, (SCREEN_WIDTH /2) ,((SCREEN_HEIGHT /2)-parameter) ,(SCREEN_WIDTH-parameter) ,(SCREEN_HEIGHT /2) );
 
-            SDL_SetRenderDrawColor(gRenderer, 50, 205, 50, 0xFF);
+    SDL_SetRenderDrawColor(gRenderer, 50, 205, 50, 0xFF);
 
-            SDL_RenderDrawLine(gRenderer, ((SCREEN_WIDTH/2)+parameter), (-200+(i*(SCREEN_HEIGHT/4))), SCREEN_WIDTH,(-200+(i*(SCREEN_HEIGHT/4)+parameter)));
-        }
+    SDL_RenderDrawLine(gRenderer, 0+parameter ,(SCREEN_HEIGHT /2) ,(SCREEN_WIDTH /2) ,((SCREEN_HEIGHT /2) + parameter) );
 
-        else {
-            SDL_SetRenderDrawColor(gRenderer, 218, 112, 214, 0xFF);
+    SDL_SetRenderDrawColor(gRenderer, 50, 205, 50, 0xFF);
 
-            SDL_RenderDrawLine(gRenderer, 0, (-200+((i+1)*(SCREEN_HEIGHT/4))+parameter), parameter, (SCREEN_HEIGHT/4)*(i+1));
+    SDL_RenderDrawLine(gRenderer, (SCREEN_WIDTH /2) ,((SCREEN_HEIGHT /2)+parameter) ,(SCREEN_WIDTH-parameter) ,(SCREEN_HEIGHT /2) );
 
-            SDL_SetRenderDrawColor(gRenderer, 50, 205, 50, 0xFF);
-
-            SDL_RenderDrawLine(gRenderer, parameter, (-200+(SCREEN_HEIGHT/4)*(i+1)), SCREEN_WIDTH/2,(-200+((i+1)*(SCREEN_HEIGHT/4)+parameter)));
-
-        }
-    }
 
 
 }
 
+
+
 void draw()
 {
-        for (int i = 10; i < 200; i+=5) {
-            fun (i);}
+    for (int i = 0; i < 200; i+=5) {
+        fun (i);}
 
 }
 
@@ -67,7 +61,7 @@ bool init()
     }
 
     //Create window
-    gWindow = SDL_CreateWindow( "Colored Box", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+    gWindow = SDL_CreateWindow( "Line in the middle", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
     if( gWindow == nullptr )
     {
         std::cout << "Window could not be created! SDL Error: " << SDL_GetError() << std::endl;
