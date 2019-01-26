@@ -6,12 +6,25 @@
 
 std::vector<std::string> getChildrenWithMoreThanFourCandies(const std::vector<std::pair<std::string, std::map<std::string, int>>>& students)
 {
+std::vector<std::string> names;
 
+for (unsigned int i = 0; i < students.size(); i++) {
+    if (students[i].second.at("candies") > 4) {
+        names.push_back(students[i].first);
+    }
+}
+return names;
 }
 
 int sumOfAgeWithLessThanFiveCandies(const std::vector<std::pair<std::string, std::map<std::string, int>>>& students)
 {
-
+    int sum = 0;
+    for (unsigned int i = 0; i < students.size(); i++) {
+        if (students[i].second.at("candies") < 5) {
+            sum += students[i].second.at("age");
+        }
+    }
+    return sum;
 }
 
 int main(int argc, char* args[])
@@ -49,8 +62,8 @@ int main(int argc, char* args[])
     students.push_back(std::make_pair("George", GeorgeData));
 
     // Display the following things:
-    //  - Who has got more than 4 candies
-    //  - Sum the age of children who have less than 5 candies
+    //  - The names of students who have more than 4 candies
+    //  - The sum of the age of children who have less than 5 candies
 
     std::cout << "Children with more than 4 candies: ";
 
