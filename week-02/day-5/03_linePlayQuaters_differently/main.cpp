@@ -22,18 +22,22 @@ SDL_Renderer* gRenderer = nullptr;
 
 void fun (int& x, int& y, int& lines, int& multiplicator) {
 
+    int PIECE_WIDTH = SCREEN_WIDTH/multiplicator;
+    int PIECE_HEIGHT = SCREEN_HEIGHT/multiplicator;
+
+
     SDL_SetRenderDrawColor(gRenderer, 218, 112, 214, 0xFF);
 
-    SDL_RenderDrawLine(gRenderer, (((SCREEN_WIDTH/multiplicator)*y) - (SCREEN_WIDTH/multiplicator)), (((SCREEN_HEIGHT/multiplicator)*x) - (SCREEN_HEIGHT/multiplicator)+lines), (((SCREEN_WIDTH/multiplicator)*y) - (SCREEN_WIDTH/multiplicator)+lines), ((SCREEN_HEIGHT/multiplicator)*x));
+    SDL_RenderDrawLine(gRenderer, ((PIECE_WIDTH * y) - PIECE_WIDTH), ((PIECE_HEIGHT * x) - PIECE_HEIGHT + lines), ((PIECE_WIDTH * y) - PIECE_WIDTH + lines), (PIECE_HEIGHT * x));
 
     SDL_SetRenderDrawColor(gRenderer, 50, 205, 50, 0xFF);
 
-    SDL_RenderDrawLine(gRenderer, (((SCREEN_WIDTH/multiplicator)*y) - (SCREEN_WIDTH/multiplicator)+lines), (((SCREEN_HEIGHT/multiplicator)*x) - (SCREEN_HEIGHT/multiplicator)) ,((SCREEN_WIDTH/multiplicator)*y) ,(((SCREEN_HEIGHT/multiplicator)*x) - (SCREEN_HEIGHT/multiplicator)+lines) );
+    SDL_RenderDrawLine(gRenderer, ((PIECE_WIDTH * y) - PIECE_WIDTH + lines), ((PIECE_HEIGHT * x) - PIECE_HEIGHT) ,(PIECE_WIDTH * y) ,(PIECE_WIDTH * x) - PIECE_HEIGHT+lines );
 }
 
 void draw()
 {
-    int num = 1; //num is the value of the multiplication by axis. 1, 2, 4 and 8 are tested values.//
+    int num = 1; //num is the value of the multiplication by axis. 1, 2, 4 and 8 are tested.//
     for (int x = 0; x <= num; x++) {
         for (int y = 0; y <= num; y++) {
             for (int i = ((SCREEN_WIDTH/num)/20); i < (SCREEN_WIDTH/num); i+= ((SCREEN_WIDTH/num)/40)) {
