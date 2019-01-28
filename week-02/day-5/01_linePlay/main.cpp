@@ -35,7 +35,7 @@ void fun (int parameter) {
 
 void draw()
 {
-for (int i = 10; i < 500; i+=10) {
+for (int i = (SCREEN_WIDTH/50); i < SCREEN_WIDTH; i+=(SCREEN_WIDTH/50)) {
     fun (i);}
 
 }
