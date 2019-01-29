@@ -10,11 +10,11 @@ public:
     }
 
     void eat() {
-        hunger +=1;
+        hunger -=1;
     };
 
     void drink() {
-        thirst +=1;
+        thirst -=1;
     };
 
     void play() {
