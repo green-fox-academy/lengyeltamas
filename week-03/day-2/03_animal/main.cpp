@@ -18,8 +18,8 @@ public:
     };
 
     void play() {
-        eat();
-        drink();
+        hunger+=1;
+        thirst+=1;
       };
 
     int getHunger () {
@@ -42,6 +42,11 @@ int main(int argc, char* args[]) {
     Animal elephant;
     Animal crocodile;
 
-    std::cout << "Lion's hunger is: " << lion.getHunger() << "\n" << "Elephant's thirst is:" << elephant.getDrink() << "\n" << "Crocodile's hunger is: " << crocodile.getHunger() << " Crocodile's thirst is: " << crocodile.getDrink()<< std::endl;
+
+    lion.eat();
+    elephant.drink();
+    crocodile.play();
+
+    std::cout << "Lion's hunger is: " << lion.getHunger() << "\n" << "Elephant's thirst is: " << elephant.getDrink() << "\n" << "Crocodile's hunger is: " << crocodile.getHunger() << " Crocodile's thirst is: " << crocodile.getDrink()<< std::endl;
 
 }
