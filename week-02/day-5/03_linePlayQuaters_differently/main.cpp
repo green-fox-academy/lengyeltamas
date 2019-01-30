@@ -37,7 +37,7 @@ void fun (int& x, int& y, int& lines, int& multiplicator) {
 
 void draw()
 {
-    int num = 1; //num is the value of the multiplication by axis. 1, 2, 4 and 8 are tested.//
+    int num = 4; //num is the value of the multiplication by axis. 1, 2, 4 and 8 are tested.//
     for (int x = 0; x <= num; x++) {
         for (int y = 0; y <= num; y++) {
             for (int i = ((SCREEN_WIDTH/num)/20); i < (SCREEN_WIDTH/num); i+= ((SCREEN_WIDTH/num)/40)) {

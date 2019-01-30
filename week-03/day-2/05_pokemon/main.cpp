@@ -26,10 +26,17 @@ int main(int argc, char* args[])
 
     // Ash has a few pokemon.
     // A wild pokemon appeared!
-
+    std::string name;
     Pokemon wildPokemon("Oddish", "leaf", "water");
 
     // Which pokemon should Ash use?
+
+    for (unsigned int i = 0; i < pokemonOfAsh.size(); i++) {
+        if (pokemonOfAsh[i].isEffectiveAgainst(wildPokemon)) {
+            name = pokemonOfAsh[i]._name;
+        }
+    }
+
 
     std::cout << "I choose You, " << name << std::endl;
     return 0;
