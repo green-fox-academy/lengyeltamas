@@ -9,5 +9,5 @@ Pokemon::Pokemon(const std::string& name, const std::string& type, const std::st
 
 bool Pokemon::isEffectiveAgainst(Pokemon anotherPokemon)
 {
-    return _effectiveAgainst == anotherPokemon._type;
+     return _effectiveAgainst == anotherPokemon._type;
 }
