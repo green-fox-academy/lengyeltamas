@@ -7,12 +7,16 @@
 
 int bunnyEarCounterMaschine (int bunnies, int evenEars, int oddEars) {
     int ears;
-    if (bunnies % 2 == 0) {
-        ears = evenEars;
+    if (bunnies > 0) {
+        if (bunnies % 2 == 0) {
+            ears = evenEars;
+        } else {
+            ears = oddEars;
+        }
+        return ears + bunnyEarCounterMaschine((bunnies - 1), evenEars, oddEars);
     } else {
-        ears = oddEars;
+        return  0;
     }
-    return ears + bunnyEarCounterMaschine((bunnies - 1), evenEars, oddEars);
 
 }
 
