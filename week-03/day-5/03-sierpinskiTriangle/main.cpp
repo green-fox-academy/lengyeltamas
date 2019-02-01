@@ -20,22 +20,22 @@ SDL_Window* gWindow = nullptr;
 //The window renderer
 SDL_Renderer* gRenderer = nullptr;
 
-void fractalDrawer3000 (int limit, int width, int height, int X, int Y) {
+void fractalDrawer3000 (long double limit, long double width, long double height, long double X, long double Y) {
 
     if (limit > 1) {
-        int halfWidth = width / 2;
-        int halfHeight = height / 2;
-        int Xstart = X;
-        int Ystart = Y;
+        long double quaterWidth = width / 4;
+        long double quaterHeight = height / 4;
+        long double Xstart = X;
+        long double Ystart = Y;
         SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 0xFF);
 
-        SDL_RenderDrawLine(gRenderer, Xstart + halfWidth * 1, Ystart + halfHeight * 0, Xstart + halfWidth * 0, Ystart + halfHeight * 2);
-        SDL_RenderDrawLine(gRenderer, Xstart + halfWidth * 0, Ystart + halfHeight * 2, Xstart + halfWidth * 2, Ystart + halfHeight * 2);
-        SDL_RenderDrawLine(gRenderer, Xstart + halfWidth * 1, Ystart + halfHeight * 0, Xstart + halfWidth * 2, Ystart + halfHeight * 2);
+        SDL_RenderDrawLine(gRenderer, Xstart + quaterWidth * 0, Ystart + quaterHeight * 0, Xstart + quaterWidth * 2, Ystart + quaterHeight * 4);
+        SDL_RenderDrawLine(gRenderer, Xstart + quaterWidth * 2, Ystart + quaterHeight * 4, Xstart + quaterWidth * 4, Ystart + quaterHeight * 0);
+        SDL_RenderDrawLine(gRenderer, Xstart + quaterWidth * 0, Ystart + quaterHeight * 0, Xstart + quaterWidth * 4, Ystart + quaterHeight * 0);
 
-        fractalDrawer3000(limit - 1, halfWidth, halfHeight, Xstart, Ystart);
-        fractalDrawer3000(limit - 1, halfWidth, halfHeight, Xstart, Ystart);
-        fractalDrawer3000(limit - 1, halfWidth, halfHeight, Xstart, Ystart);
+        fractalDrawer3000(limit - 1, 2 * quaterWidth, 2 * quaterHeight, 2 * quaterWidth + Xstart, Ystart);
+        fractalDrawer3000(limit - 1, 2 * quaterWidth, 2 * quaterHeight, quaterWidth + Xstart, 2 * quaterHeight + Ystart);
+        fractalDrawer3000(limit - 1, 2 * quaterWidth, 2 * quaterHeight, Xstart, Ystart);
 
     }
 }
@@ -44,9 +44,9 @@ void fractalDrawer3000 (int limit, int width, int height, int X, int Y) {
 
 void draw()
 {
-    int number = 5;
-    int Xstart = 0;
-    int Ystart = 0;
+    long double number = 9;
+    long double Xstart = 0;
+    long double Ystart = 0;
     fractalDrawer3000(number, SCREEN_WIDTH, SCREEN_HEIGHT, Xstart, Ystart);
 
 
