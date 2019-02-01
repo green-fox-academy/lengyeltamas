@@ -23,21 +23,20 @@ SDL_Renderer* gRenderer = nullptr;
 void fractalDrawer3000 (int limit, int width, int height, int X, int Y) {
 
     if (limit > 1) {
-        int thirdWidth = width / 3;
-        int thirdHeight = height / 3;
+        int halfWidth = width / 2;
+        int halfHeight = height / 2;
         int Xstart = X;
         int Ystart = Y;
         SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 0xFF);
 
-        SDL_RenderDrawLine(gRenderer, Xstart + thirdWidth * 1, Ystart + thirdHeight * 0, Xstart + thirdWidth * 1, Ystart + thirdHeight * 3);
-        SDL_RenderDrawLine(gRenderer, Xstart + thirdWidth * 2, Ystart + thirdHeight * 0, Xstart + thirdWidth * 2, Ystart + thirdHeight * 3);
-        SDL_RenderDrawLine(gRenderer, Xstart + thirdWidth * 0, Ystart + thirdHeight * 1, Xstart + thirdWidth * 3, Ystart + thirdHeight * 1);
-        SDL_RenderDrawLine(gRenderer, Xstart + thirdWidth * 0, Ystart + thirdHeight * 2, Xstart + thirdWidth * 3, Ystart + thirdHeight * 2);
+        SDL_RenderDrawLine(gRenderer, Xstart + halfWidth * 1, Ystart + halfHeight * 0, Xstart + halfWidth * 0, Ystart + halfHeight * 2);
+        SDL_RenderDrawLine(gRenderer, Xstart + halfWidth * 0, Ystart + halfHeight * 2, Xstart + halfWidth * 2, Ystart + halfHeight * 2);
+        SDL_RenderDrawLine(gRenderer, Xstart + halfWidth * 1, Ystart + halfHeight * 0, Xstart + halfWidth * 2, Ystart + halfHeight * 2);
 
-        fractalDrawer3000(limit - 1, thirdWidth, thirdHeight, Xstart + thirdWidth, Ystart);
-        fractalDrawer3000(limit - 1, thirdWidth, thirdHeight, Xstart, Ystart + thirdHeight);
-        fractalDrawer3000(limit - 1, thirdWidth, thirdHeight, Xstart + 2 * thirdWidth, Ystart + thirdHeight);
-        fractalDrawer3000(limit - 1, thirdWidth, thirdHeight, Xstart + thirdWidth, Ystart + 2 * thirdHeight);
+        fractalDrawer3000(limit - 1, halfWidth, halfHeight, Xstart, Ystart);
+        fractalDrawer3000(limit - 1, halfWidth, halfHeight, Xstart, Ystart);
+        fractalDrawer3000(limit - 1, halfWidth, halfHeight, Xstart, Ystart);
+
     }
 }
 
@@ -45,7 +44,7 @@ void fractalDrawer3000 (int limit, int width, int height, int X, int Y) {
 
 void draw()
 {
-    int number = 10;
+    int number = 5;
     int Xstart = 0;
     int Ystart = 0;
     fractalDrawer3000(number, SCREEN_WIDTH, SCREEN_HEIGHT, Xstart, Ystart);
