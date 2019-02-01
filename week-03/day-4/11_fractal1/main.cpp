@@ -2,8 +2,8 @@
 #include <SDL.h>
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 400;
-const int SCREEN_HEIGHT = 400;
+const double SCREEN_WIDTH = 800;
+const double SCREEN_HEIGHT = 600;
 
 //Draws geometry on the canvas
 void draw();
@@ -20,33 +20,38 @@ SDL_Window* gWindow = nullptr;
 //The window renderer
 SDL_Renderer* gRenderer = nullptr;
 
-void fun (int& x, int& y, int& lines, int& multiplicator) {
+void fractalDrawer3000 (int limit, int width, int height, int X, int Y) {
 
-    int PIECE_WIDTH = SCREEN_WIDTH/multiplicator;
-    int PIECE_HEIGHT = SCREEN_HEIGHT/multiplicator;
+    if (limit > 1) {
+        int thirdWidth = width / 3;
+        int thirdHeight = height / 3;
+        int Xstart = X;
+        int Ystart = Y;
+        SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 0xFF);
 
+        SDL_RenderDrawLine(gRenderer, Xstart + thirdWidth * 1, Ystart + thirdHeight * 0, Xstart + thirdWidth * 1, Ystart + thirdHeight * 3);
+        SDL_RenderDrawLine(gRenderer, Xstart + thirdWidth * 2, Ystart + thirdHeight * 0, Xstart + thirdWidth * 2, Ystart + thirdHeight * 3);
+        SDL_RenderDrawLine(gRenderer, Xstart + thirdWidth * 0, Ystart + thirdHeight * 1, Xstart + thirdWidth * 3, Ystart + thirdHeight * 1);
+        SDL_RenderDrawLine(gRenderer, Xstart + thirdWidth * 0, Ystart + thirdHeight * 2, Xstart + thirdWidth * 3, Ystart + thirdHeight * 2);
 
-    SDL_SetRenderDrawColor(gRenderer, 218, 112, 214, 0xFF);
-
-    SDL_RenderDrawLine(gRenderer, ((PIECE_WIDTH * y) - PIECE_WIDTH), ((PIECE_HEIGHT * x) - PIECE_HEIGHT + lines), ((PIECE_WIDTH * y) - PIECE_WIDTH + lines), (PIECE_HEIGHT * x));
-
-    SDL_SetRenderDrawColor(gRenderer, 50, 205, 50, 0xFF);
-
-    SDL_RenderDrawLine(gRenderer, ((PIECE_WIDTH * y) - PIECE_WIDTH + lines), ((PIECE_HEIGHT * x) - PIECE_HEIGHT) ,(PIECE_WIDTH * y) ,(PIECE_WIDTH * x) - PIECE_HEIGHT+lines );
-}
-
-void draw()
-{
-    int num = 8; //num is the value of the multiplication by axis. 1, 2, 4 and 8 are tested.//
-    for (int x = 0; x <= num; x++) {
-        for (int y = 0; y <= num; y++) {
-            for (int i = ((SCREEN_WIDTH/num)/20); i < (SCREEN_WIDTH/num); i+= ((SCREEN_WIDTH/num)/40)) {
-                fun (x, y, i, num);
-            }
-        }
+        fractalDrawer3000(limit - 1, thirdWidth, thirdHeight, Xstart + thirdWidth, Ystart);
+        fractalDrawer3000(limit - 1, thirdWidth, thirdHeight, Xstart, Ystart + thirdHeight);
+        fractalDrawer3000(limit - 1, thirdWidth, thirdHeight, Xstart + 2*thirdWidth, Ystart + thirdHeight);
+        fractalDrawer3000(limit - 1, thirdWidth, thirdHeight, Xstart + thirdWidth, Ystart + 2* thirdHeight);
     }
 }
 
+
+
+void draw()
+{
+    int number = 10;
+    int Xstart = 0;
+    int Ystart = 0;
+    fractalDrawer3000(number, SCREEN_WIDTH, SCREEN_HEIGHT, Xstart, Ystart);
+
+
+}
 bool init()
 {
     //Initialize SDL
