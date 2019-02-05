@@ -2,8 +2,8 @@
 #include <SDL.h>
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 400;
-const int SCREEN_HEIGHT = 400;
+const double SCREEN_WIDTH = 600;
+const double SCREEN_HEIGHT = 600;
 
 //Draws geometry on the canvas
 void draw();
@@ -20,37 +20,34 @@ SDL_Window* gWindow = nullptr;
 //The window renderer
 SDL_Renderer* gRenderer = nullptr;
 
-void fun (int parameter) {
+void kochLineDrawer4000 (long double limit, long double width, long double height, long double X, long double Y) {
 
-    SDL_SetRenderDrawColor(gRenderer, 50, 205, 50, 0xFF);
+    if (limit > 1) {
+        long double sixthWidth = width / 6;
+        long double sixthHeight = height / 6;
+        long double Xstart = X;
+        long double Ystart = Y;
+        SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 0xFF);
 
-    SDL_RenderDrawLine(gRenderer, 0+parameter, (SCREEN_HEIGHT /2), (SCREEN_WIDTH /2), ((SCREEN_HEIGHT /2)-parameter) );
+        SDL_RenderDrawLine(gRenderer, Xstart + sixthWidth * 0, Ystart + sixthHeight * 4, Xstart + sixthWidth * 6, Ystart + sixthHeight * 4);
 
-    SDL_SetRenderDrawColor(gRenderer, 50, 205, 50, 0xFF);
+        kochLineDrawer4000(limit - 1, sixthWidth, sixthHeight, sixthWidth, sixthHeight - Ystart);
+        kochLineDrawer4000(limit - 1, sixthWidth, sixthHeight, sixthWidth, sixthHeight);
 
-    SDL_RenderDrawLine(gRenderer, (SCREEN_WIDTH /2) ,((SCREEN_HEIGHT /2)-parameter) ,(SCREEN_WIDTH-parameter) ,(SCREEN_HEIGHT /2) );
-
-    SDL_SetRenderDrawColor(gRenderer, 50, 205, 50, 0xFF);
-
-    SDL_RenderDrawLine(gRenderer, 0+parameter ,(SCREEN_HEIGHT /2) ,(SCREEN_WIDTH /2) ,((SCREEN_HEIGHT /2) + parameter) );
-
-    SDL_SetRenderDrawColor(gRenderer, 50, 205, 50, 0xFF);
-
-    SDL_RenderDrawLine(gRenderer, (SCREEN_WIDTH /2) ,((SCREEN_HEIGHT /2)+parameter) ,(SCREEN_WIDTH-parameter) ,(SCREEN_HEIGHT /2) );
-
-
-
+    }
 }
 
 
 
 void draw()
 {
-    for (int i = 0; i < 200; i+=15) {
-        fun (i);}
+    long double number = 3;
+    long double Xstart = 0;
+    long double Ystart = 0;
+    kochLineDrawer4000(number, SCREEN_WIDTH, SCREEN_HEIGHT, Xstart, Ystart);
+
 
 }
-
 bool init()
 {
     //Initialize SDL
@@ -61,7 +58,7 @@ bool init()
     }
 
     //Create window
-    gWindow = SDL_CreateWindow( "Line in the middle", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+    gWindow = SDL_CreateWindow( "Line Play Quaters", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
     if( gWindow == nullptr )
     {
         std::cout << "Window could not be created! SDL Error: " << SDL_GetError() << std::endl;

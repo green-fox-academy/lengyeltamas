@@ -22,7 +22,7 @@ SDL_Renderer* gRenderer = nullptr;
 
 void drawaddition (int parameter) {
 
-    SDL_SetRenderDrawColor(gRenderer,255-(parameter % 150),255-(parameter % 150),255-(parameter % 150),255);
+    SDL_SetRenderDrawColor(gRenderer,255-(parameter % 100),255-(parameter % 100),255-(parameter % 100),255);
 
     SDL_Rect drawrect{(SCREEN_WIDTH / 2) -(parameter/2), (SCREEN_HEIGHT / 2)-(parameter/2), parameter, parameter};
 
