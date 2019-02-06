@@ -22,5 +22,4 @@ private:
     Level _level;
 };
 
-
 #endif //INC_01_GREENFOXORGANIZATION_MENTOR_H

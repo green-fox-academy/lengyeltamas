@@ -19,5 +19,4 @@ private:
 
 };
 
-
 #endif //INC_01_GREENFOXORGANIZATION_STUDENT_H
