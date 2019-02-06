@@ -24,5 +24,4 @@ protected:
     Gender _gender;
 };
 
-
 #endif //INC_01_GREENFOXORGANIZATION_PERSON_H
