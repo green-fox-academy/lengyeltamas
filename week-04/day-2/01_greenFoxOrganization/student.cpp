@@ -21,11 +21,11 @@ void Student::introduce()
 {
     std::cout << "Hi, I'm " <<
     _name << " a " <<
-    _age << "year old " <<
-    _gender << "from " <<
-    _previousOrganization << "who skipped " <<
+    _age << " year old " <<
+    _gender << " from " <<
+    _previousOrganization << " who skipped " <<
     _skippedDays <<
-    "from the course already." << std::endl;
+    " from the course already." << std::endl;
 }
 
 void Student::skipDays(int skippedDays)
