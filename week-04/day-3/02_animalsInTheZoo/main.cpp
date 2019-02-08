@@ -4,8 +4,8 @@
 
 int main()
 {
-    // animal (name, age, color, gender, size)
+    // animal (name, age, gender, size)
     // mammal (animal + isItFurry, numberOfLimbs)
-    Mammal Doggo ("Dog", 2, "Brown", MALE, TINY, FURRY, 4);
-    Mammal Tiger ("Tiger", 4, "TigerStripped", MALE, REGULAR, FURRY, 4);
+    Mammal Doggo ("Dog", 2, MALE, TINY, FURRY, 4);
+    Mammal Tiger ("Tiger", 4, MALE, REGULAR, FURRY, 4);
 }

@@ -41,15 +41,12 @@ void fractalDrawer3000 (int limit, int width, int height, int X, int Y) {
     }
 }
 
-
-
 void draw()
 {
     int number = 10;
     int Xstart = 0;
     int Ystart = 0;
     fractalDrawer3000(number, SCREEN_WIDTH, SCREEN_HEIGHT, Xstart, Ystart);
-
 
 }
 bool init()
