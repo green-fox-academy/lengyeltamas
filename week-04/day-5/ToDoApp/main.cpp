@@ -15,25 +15,27 @@ void oneArgument ()
               << std::endl;
 };
 
-void twoArgument ()
+void secondArgumentIsLWithTask ()
 {
     std::ifstream todofile;
-    todofile.open("todo.txt");
+    todofile.open("todo.txt"); // modify filename to "todo2.txt" here, to test the third task!
     std::string line;
     std::vector<std::string> filecontent;
     while (getline(todofile, line)) {
         filecontent.push_back(line);
     }
     if (todofile.is_open()) {
-        for (unsigned int i = 0; i < filecontent.size(); ++i) {
-            std::cout << i+1 << " - " << filecontent[i] << std::endl;
+        if (filecontent.size() < 1) {
+            std::cout << "No todos for today! :)" << std::endl;
+        } else {
+            for (unsigned int i = 0; i < filecontent.size(); ++i) {
+                std::cout << i + 1 << " - " << filecontent[i] << std::endl;
+            }
         }
     } else {
         std::cout << "File is not open." << std::endl;
     }
-
-}
-
+};
 
 int main(int argc, char *argv[])
 {
@@ -44,9 +46,7 @@ int main(int argc, char *argv[])
     if (argc == 2) {
         std::string firstArgument (argv[1]);
         if (firstArgument == "-l")
-        twoArgument();
+            secondArgumentIsLWithTask();
     }
-
-
     return 0;
 }
