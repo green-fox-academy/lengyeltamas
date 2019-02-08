@@ -14,9 +14,10 @@ std::string sizeToString (Size size) {
     } else if (size == Size::REGULAR) {
         return "regular";
     } else {
-        return "OMG";
+        return "omgwtf";
     }
 }
+
 
 Animal::Animal(std::string name, int age, Gender gender, Size size)
 {

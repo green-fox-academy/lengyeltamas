@@ -22,7 +22,7 @@ void Student::introduce()
     std::cout << "Hi, I'm " <<
     _name << " a " <<
     _age << " year old " <<
-    _gender << " from " <<
+    GenderToString(_gender) << " from " <<
     _previousOrganization << " who skipped " <<
     _skippedDays <<
     " from the course already." << std::endl;
@@ -30,5 +30,5 @@ void Student::introduce()
 
 void Student::skipDays(int skippedDays)
 {
-    _skippedDays +=_numberOfDays;
+    _skippedDays +=skippedDays;
 }

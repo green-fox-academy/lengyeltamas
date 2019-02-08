@@ -15,7 +15,6 @@ public:
 private:
     std::string _previousOrganization;
     int _skippedDays;
-    int _numberOfDays;
 
 };
 

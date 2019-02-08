@@ -13,7 +13,7 @@ std::string genderToString (Gender gender);
 enum Size {
     TINY,
     REGULAR,
-    OMG
+    OMGWTF
 };
 
 std::string sizeToString (Size size);
@@ -21,6 +21,7 @@ std::string sizeToString (Size size);
 class Animal
 {
 public:
+    Animal();
     Animal(std::string name, int age, Gender gender, Size size);
     std::string getName();
     virtual std::string breed() = 0;

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "mentor.h"
+
 std::string LevelToString (Level level)
 {
     if (level == Level::JUNIOR) {
@@ -32,6 +33,6 @@ void Mentor::introduce()
     std::cout << "Hi, I'm " <<
     _name << " , a " <<
     _age << " year old " <<
-    _gender << " " <<
-    _level << " mentor." << std::endl;
+     LevelToString(_level) << " " <<
+     GenderToString(_gender) << " mentor." << std::endl;
 }

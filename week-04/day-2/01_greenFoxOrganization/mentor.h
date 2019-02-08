@@ -1,6 +1,7 @@
 #ifndef INC_01_GREENFOXORGANIZATION_MENTOR_H
 #define INC_01_GREENFOXORGANIZATION_MENTOR_H
-#include "student.h"
+#include "person.h"
+
 
 enum Level {
     JUNIOR,

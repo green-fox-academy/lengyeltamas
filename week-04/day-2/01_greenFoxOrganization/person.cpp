@@ -29,7 +29,7 @@ void Person::introduce ()
 {
     std::cout << "Hi, I'm " <<
     _name << ", a " <<
-    _age << " year old" <<
+    _age << " year old " <<
     GenderToString(_gender) << std::endl;
 }
 
