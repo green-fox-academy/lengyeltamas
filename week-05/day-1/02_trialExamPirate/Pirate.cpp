@@ -26,13 +26,13 @@ void Pirate::party()
     if (_isCapitain) {
         _healthPoint += 10;
     } else {
-        _healthPoint +=1;
+        _healthPoint += 1;
     }
 }
 
 std::string Pirate::toString()
 {
-    if(_hasWoodenLeg) {
+    if (_hasWoodenLeg) {
         return "Hello, I'm " + _name + ". I have a wooden leg and " + std::to_string(_amountOfGold) + " golds.";
     } else {
         return "Hello, I'm " + _name + ". I still have my real legs and " + std::to_string(_amountOfGold) + " golds.";

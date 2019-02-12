@@ -3,10 +3,10 @@
 
 int main()
 {
-    Pirate pirate1 ("Jack", true, false);
-    Pirate pirate2 ("Davey", false, true);
-    Pirate pirate3 ("Hook", true, true);
-    Pirate pirate4 ("Chuck", false, false);
+    Pirate pirate1("Jack", true, false);
+    Pirate pirate2("Davey", false, true);
+    Pirate pirate3("Hook", true, true);
+    Pirate pirate4("Chuck", false, false);
 
     std::cout << pirate1.toString() << std::endl;
     std::cout << pirate2.toString() << std::endl;
