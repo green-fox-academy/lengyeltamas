@@ -6,7 +6,7 @@
 class Farm
 {
 public:
-    Farm(int numberOfSlots);
+    Farm(int numberOfSlots, std::vector<Animal> alreadyCreatedAnimals);
     void breed();
     void slaughter();
     int getSizeOfAnimalVector();

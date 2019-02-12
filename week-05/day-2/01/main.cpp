@@ -4,16 +4,25 @@
 
 int main()
 {
-    Farm testfarm(4);
+    Animal cat;
+    Animal dog;
+    Animal seal;
 
-    testfarm.breed();
-    testfarm.breed();
+    std::vector<Animal> myvector;
+    myvector.push_back(cat);
+    myvector.push_back(dog);
+    myvector.push_back(seal);
+
+    Farm testfarm(5, myvector);
     testfarm.breed();
     testfarm.breed();
     testfarm.breed();
 
-    std::cout << testfarm.getSizeOfAnimalVector();
+    std::cout << testfarm.getSizeOfAnimalVector() << std::endl;
 
+    testfarm.slaughter();
+
+    std::cout << testfarm.getSizeOfAnimalVector() << std::endl;
 
     return 0;
 }

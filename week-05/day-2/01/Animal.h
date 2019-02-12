@@ -6,7 +6,6 @@ class Animal
 {
 public:
     Animal();
-    ~Animal();
     void eat();
     void drink();
     void play();

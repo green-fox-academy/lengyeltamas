@@ -5,8 +5,6 @@ Animal::Animal()
     _thirst = 50;
 }
 
-Animal::~Animal() {}
-
 void Animal::eat()
 {
     _hunger--;
