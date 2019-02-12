@@ -9,18 +9,14 @@ int bunnymultiplicator (int earsnum, int bunnynum) {
      } else {
          return 0;
      }
-
 }
-
 
 int main() {
     int ears = 2;
     int bunny;
     std::cout << "Give me the number of bunnies you got: " << std::endl;
     std::cin >> bunny;
-
     std::cout << "Then your bunnies have " << bunnymultiplicator(ears, bunny) << " piece of ears! Congratulations!" << std::endl;
-
 
     return 0;
 }

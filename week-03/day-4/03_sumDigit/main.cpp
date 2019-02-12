@@ -13,15 +13,12 @@ int digitSum (int n) {
     }
 }
 
-
-
 int main() {
 
     int number;
     std::cout << "Give me a number and i'll tell you the sum of its digits: " <<std::endl;
     std::cin >> number;
     std::cout << "The sum of your number's digits are: " << digitSum(number);
-
 
     return 0;
 }

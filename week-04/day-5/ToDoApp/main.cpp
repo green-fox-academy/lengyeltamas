@@ -18,7 +18,7 @@ void oneArgument ()
 void secondArgumentIsLWithTask ()
 {
     std::ifstream todofile;
-    todofile.open("todo.txt"); // modify filename to "todo2.txt" here, to test the third task!
+    todofile.open("todo2.txt"); // modify filename to "todo2.txt" here, to test the third task!
     std::string line;
     std::vector<std::string> filecontent;
     while (getline(todofile, line)) {
@@ -37,6 +37,14 @@ void secondArgumentIsLWithTask ()
     }
 };
 
+void secondArgumentIsA(){
+    std::ofstream todofile;
+    todofile.open("todo.txt");
+    todofile << "\nFeed the monkey";
+    todofile.close();
+
+};
+
 int main(int argc, char *argv[])
 {
     if (argc == 1) {
@@ -48,5 +56,20 @@ int main(int argc, char *argv[])
         if (firstArgument == "-l")
             secondArgumentIsLWithTask();
     }
+
+    if (argc == 3) {
+        std::string firstArgument (argv[1]);
+        std::string secondArgument (argv[2]);
+        if (firstArgument == "-a") {
+            secondArgumentIsA(secondArgument);
+        } else if (firstArgument == "-r") {
+
+        } else if (firstArgument == "-c") {
+
+        } else {
+            std::cout << "Wrong argument!" << std::endl;
+        }
+    }
+
     return 0;
 }

@@ -40,16 +40,12 @@ void fractalDrawer3000 (long double limit, long double width, long double height
     }
 }
 
-
-
 void draw()
 {
     long double number = 9;
     long double Xstart = 0;
     long double Ystart = 0;
     fractalDrawer3000(number, SCREEN_WIDTH, SCREEN_HEIGHT, Xstart, Ystart);
-
-
 }
 bool init()
 {
