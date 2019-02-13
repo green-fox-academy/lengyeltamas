@@ -8,13 +8,15 @@ class Carrier
 public:
     Carrier(int carrierAmmo, int carrierHealthPoint);
 
-    void add(Aircraft aircraft);
-
     const std::vector<Aircraft> &get_aircrafts() const;
 
     int get_carrierAmmo() const;
 
     int get_carrierHealthPoint() const;
+
+    void add(Aircraft aircraft);
+
+    void fill();
 
 private:
     std::vector<Aircraft> _aircrafts;
