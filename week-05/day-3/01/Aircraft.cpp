@@ -64,3 +64,9 @@ int Aircraft::refill(int fillingAmmo)
     }
     return remainingAmmo;
 }
+
+std::string Aircraft::getType()
+{
+    return aircraftToString(get_aircraftType());
+}
+

@@ -11,6 +11,8 @@ int main()
     std::cout << "\nThe remaining ammo after filling the first aircraft is: " <<joe.refill(20) << "\n" << "The first aircraft's ammo amount is: " << joe.get_ammoAmount() << std::endl;
     std::cout << "\nThe remaining ammo after filling the second aircraft is: " << jack.refill(20) << "\n" << "The second aircraft's ammo amount is: " << jack.get_ammoAmount() << std::endl;
 
+    std::cout << "\n" <<joe.getType() << std::endl;
+
 
     return 0;
 }

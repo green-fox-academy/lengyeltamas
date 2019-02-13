@@ -26,6 +26,10 @@ public:
 
     int refill(int fillingAmmo);
 
+    std::string getType();
+
+    
+
 protected:
     AircraftType _aircraftType;
     int _maxAmmo;
