@@ -36,8 +36,11 @@ public:
 
 protected:
     AircraftType _aircraftType;
+
     int _maxAmmo;
+
     int _baseDamage;
+
     int _ammoAmount;
 };
 

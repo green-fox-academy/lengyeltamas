@@ -85,14 +85,13 @@ bool Aircraft::isPriority()
     } else {
         return false;
     }
-
 }
 
 std::string Aircraft::priorityToString()
 {
     if (isPriority() == 0) {
-        return "\nTrue";
+        return "\ntrue";
     } else {
-        return "\nFalse";
+        return "\nfalse";
     }
 }
