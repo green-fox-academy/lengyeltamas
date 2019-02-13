@@ -17,9 +17,16 @@ int main()
     std::cout << "\n" << joe.getStatus() << std::endl;
     std::cout << "\n" << jack.getStatus() << std::endl;
 
-
     std::cout << joe.priorityToString() << std::endl;
     std::cout << jack.priorityToString() << std::endl;
+
+    Carrier Helicarrier(400, 5000);
+    Helicarrier.add(joe);
+    Helicarrier.add(jack);
+
+    std::cout << "\nThe number of aircrafts stored in the carrier: " << Helicarrier.get_aircrafts().size() << std::endl;
+
+
 
     return 0;
 }
