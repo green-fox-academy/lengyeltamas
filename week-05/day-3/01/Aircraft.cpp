@@ -70,3 +70,29 @@ std::string Aircraft::getType()
     return aircraftToString(get_aircraftType());
 }
 
+std::string Aircraft::getStatus()
+{
+    return "Type " + getType() +
+        ", Ammo: " + std::to_string(get_ammoAmount()) +
+        ", Base Damage: " + std::to_string(get_baseDamage()) +
+        ", All Damage: " + std::to_string(get_ammoAmount() * get_baseDamage());
+}
+
+bool Aircraft::isPriority()
+{
+    if (_aircraftType == AircraftType::F35) {
+        return true;
+    } else {
+        return false;
+    }
+
+}
+
+std::string Aircraft::priorityToString()
+{
+    if (isPriority() == 0) {
+        return "\nTrue";
+    } else {
+        return "\nFalse";
+    }
+}

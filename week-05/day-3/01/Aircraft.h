@@ -28,7 +28,11 @@ public:
 
     std::string getType();
 
-    
+    std::string getStatus();
+
+    bool isPriority();
+
+    std::string priorityToString();
 
 protected:
     AircraftType _aircraftType;
