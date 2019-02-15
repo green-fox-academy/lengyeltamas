@@ -1,0 +1,5 @@
+Building usage
+
+The usage from type: maintainance is: 2
+The usage from type: mentor is: 4
+The usage from type: student is: 10
