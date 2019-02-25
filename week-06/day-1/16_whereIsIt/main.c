@@ -51,6 +51,6 @@ int calculateWhereIsIt(char * testSentence, char character)
         return -1;
     } else {
         index = pointer - testSentence;
-        return index;
+        return index / sizeof(char);
     }
 }
