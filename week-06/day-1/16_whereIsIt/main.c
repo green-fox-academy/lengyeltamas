@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+int calculateWhereIsIt(char * testSentence,char character);
+
 int main()
 {
     // Create a program which asks for a string and a character and stores them
@@ -32,8 +34,23 @@ int main()
     gets(sentence);
     printf("Now give me a character:\n");
     char character;
-    scanf("%c", character);
-
+    scanf("%c", &character);
+    printf("%d", calculateWhereIsIt(sentence, character));
 
     return 0;
+}
+
+int calculateWhereIsIt(char * testSentence, char character)
+{
+    int index;
+    char * pointer;
+
+    pointer = strchr(testSentence, character);
+
+    if(pointer == NULL) {
+        return -1;
+    } else {
+        index = pointer - testSentence;
+        return index;
+    }
 }
