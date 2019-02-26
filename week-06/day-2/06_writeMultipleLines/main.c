@@ -13,7 +13,7 @@ void fileWriter(char * file_name, char * test_word, int test_num);
 
 int main()
 {
-    char * word = "apple\n";
+    char word[7] = "apple";
     int number_of_lines = 15;
     fileWriter("../my-file.txt", word, number_of_lines);
     return 0;
@@ -21,6 +21,8 @@ int main()
 
 void fileWriter(char * file_name, char * test_word, int test_num)
 {
+    char * pause = "\n";
+    strcat(test_word, pause);
     FILE *my_file = fopen(file_name, "w");
     if (file_name == NULL) {
         printf("Cannot open file!");
