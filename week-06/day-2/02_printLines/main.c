@@ -24,6 +24,5 @@ int main ()
         printf("%s", read_line);
     }
     fclose(open_file);
-
     return 0;
 }
