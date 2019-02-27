@@ -33,5 +33,8 @@ int main()
     for (int i = 0; i < Y; ++i) {
         printf("The value of element nr. %d is: %d\n", i+1, pointer[i]);
     }
+
+    realloc(pointer, 0);
+
     return 0;
 }
