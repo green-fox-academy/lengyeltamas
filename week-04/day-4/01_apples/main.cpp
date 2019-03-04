@@ -1,5 +1,5 @@
 #include <iostream>
-#include "myClass.h"
+#include "poker.h"
 
 int main()
 {

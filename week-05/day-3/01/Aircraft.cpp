@@ -1,13 +1,13 @@
 #include "Aircraft.h"
 
-std::string aircraftToString (AircraftType aircraftType)
-    {
-        if (aircraftType == AircraftType::F16) {
-            return "F16";
-        } else {
-            return "F35";
-        }
-    };
+std::string aircraftToString(AircraftType aircraftType)
+{
+    if (aircraftType == AircraftType::F16) {
+        return "F16";
+    } else {
+        return "F35";
+    }
+};
 
 Aircraft::Aircraft(AircraftType aircraftType)
 {
@@ -43,7 +43,8 @@ int Aircraft::get_ammoAmount() const
     return _ammoAmount;
 }
 
-int Aircraft::fight() {
+int Aircraft::fight()
+{
     int usedAmmos = 0;
     while (_ammoAmount == 0) {
         usedAmmos++;
@@ -73,9 +74,9 @@ std::string Aircraft::getType()
 std::string Aircraft::getStatus()
 {
     return "Type " + getType() +
-        ", Ammo: " + std::to_string(get_ammoAmount()) +
-        ", Base Damage: " + std::to_string(get_baseDamage()) +
-        ", All Damage: " + std::to_string(get_ammoAmount() * get_baseDamage());
+           ", Ammo: " + std::to_string(get_ammoAmount()) +
+           ", Base Damage: " + std::to_string(get_baseDamage()) +
+           ", All Damage: " + std::to_string(get_ammoAmount() * get_baseDamage());
 }
 
 bool Aircraft::isPriority()
