@@ -14,12 +14,18 @@
 /* create a config structure */
 GPIO_InitTypeDef LEDS;
 
+GPIO_InitTypeDef push_button;
+
 int main(void)
 {
     HAL_Init();
 
     /* we need to enable the GPIOA port's clock first */
+    __HAL_RCC_GPIOB_CLK_ENABLE();
     __HAL_RCC_GPIOF_CLK_ENABLE();
+
+    push_button.Pin = GPIO_PIN_10;
+
 
     LEDS.Pin = GPIO_PIN_7 | GPIO_PIN_8 | GPIO_PIN_9 | GPIO_PIN_10;	/* setting up 2 pins at once with | operator */
     LEDS.Mode = GPIO_MODE_OUTPUT_PP;		/* configure as output, in push-pull mode */
@@ -27,15 +33,22 @@ int main(void)
     LEDS.Speed = GPIO_SPEED_HIGH;			/* we need a high-speed output */
 
     HAL_GPIO_Init(GPIOF, &LEDS);			/* initialize the pin on GPIOF port */
+    push_button.Pin = GPIO_PIN_4;
+    push_button.Mode = GPIO_MODE_INPUT;
+    push_button.Pull = GPIO_NOPULL;
+    push_button.Speed = GPIO_SPEED_HIGH;
+
+    HAL_GPIO_Init(GPIOF, &push_button);
 
     while (1) {
 
     	for	(unsigned int i = 0; i < 16; i++){
-    		HAL_GPIO_WritePin(GPIOF, GPIO_PIN_7, ((((i / 2) / 2) /2)%2));
-    		HAL_GPIO_WritePin(GPIOF, GPIO_PIN_8, (((i / 2) / 2) %2));
-    		HAL_GPIO_WritePin(GPIOF, GPIO_PIN_9, ((i / 2)%2));
+    		HAL_GPIO_WritePin(GPIOF, GPIO_PIN_7,  ((((i / 2) / 2) / 2) % 2));
+    		HAL_GPIO_WritePin(GPIOF, GPIO_PIN_8,  (((i / 2) / 2) % 2));
+    		HAL_GPIO_WritePin(GPIOF, GPIO_PIN_9,  ((i / 2) % 2));
     		HAL_GPIO_WritePin(GPIOF, GPIO_PIN_10, (i % 2));
-    		HAL_Delay(666);
+    		HAL_Delay(100);
+    		while (!HAL_GPIO_ReadPin(GPIOB, push_button.Pin)) {};
     	}
     }
 }
