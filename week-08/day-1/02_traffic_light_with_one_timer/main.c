@@ -9,8 +9,7 @@ UART_HandleTypeDef UartHandle;
 /* the timer's config structure */
 TIM_HandleTypeDef TimHandle;
 
-uint16_t tim_val = 0;		/* variable to store the actual value of the timer's register (CNT) */
-uint16_t seconds = 0;		/* variable to store the value of elapsed seconds */
+uint16_t tim_val = 0;
 
 static void Error_Handler(void);
 static void SystemClock_Config(void);
@@ -30,16 +29,6 @@ int main(void)
     LEDS.Pull = GPIO_NOPULL;
     LEDS.Speed = GPIO_SPEED_HIGH;
 
-    __HAL_RCC_USART1_CLK_ENABLE();
-    UartHandle.Instance = USART1;
-    UartHandle.Init.BaudRate = 115200;
-    UartHandle.Init.WordLength = UART_WORDLENGTH_8B;
-    UartHandle.Init.StopBits = UART_STOPBITS_1;
-    UartHandle.Init.Parity = UART_PARITY_NONE;
-    UartHandle.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-    UartHandle.Init.Mode = UART_MODE_TX_RX;
-    BSP_COM_Init(COM1, &UartHandle);
-
     /* we need to enable the TIM2 */
     __HAL_RCC_TIM2_CLK_ENABLE();
 
@@ -58,27 +47,11 @@ int main(void)
     HAL_GPIO_Init(GPIOF, &LEDS);
 
     while (1) {
-
-        /* blinking the user LED with 1 Hz (1 on and 1 off per seconds) */
     	tim_val = __HAL_TIM_GET_COUNTER(&TimHandle);
 
-
-        if (tim_val == 0) {
-            HAL_GPIO_WritePin(GPIOF, GPIO_PIN_8, GPIO_PIN_SET);
-        	HAL_GPIO_WritePin(GPIOF, GPIO_PIN_9, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOF, GPIO_PIN_10, GPIO_PIN_RESET);
-        }
-        if (tim_val == 6000) {
-            HAL_GPIO_WritePin(GPIOF, GPIO_PIN_8, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOF, GPIO_PIN_9, GPIO_PIN_SET);
-        }
-        if (tim_val == 12000) {
-        	HAL_GPIO_WritePin(GPIOF, GPIO_PIN_9, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOF, GPIO_PIN_10, GPIO_PIN_SET);
-        }
-        if (tim_val == 18000) {
-            HAL_GPIO_WritePin(GPIOF, GPIO_PIN_9, GPIO_PIN_SET);
-        }
+            HAL_GPIO_WritePin(GPIOF, GPIO_PIN_10, tim_val > 12000 && tim_val < 24000);
+        	HAL_GPIO_WritePin(GPIOF, GPIO_PIN_9, (tim_val > 6000 && tim_val < 12000 ||tim_val > 18000 && tim_val < 24000));
+            HAL_GPIO_WritePin(GPIOF, GPIO_PIN_8, tim_val < 6000);
     }
 }
 
@@ -124,10 +97,4 @@ static void SystemClock_Config(void)
     if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_7) != HAL_OK) {
         Error_Handler();
     }
-}
-
-UART_PUTCHAR
-{
-    HAL_UART_Transmit(&UartHandle, (uint8_t*)&ch, 1, 0xFFFF);
-    return ch;
 }
