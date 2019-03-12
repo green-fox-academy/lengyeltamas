@@ -1,15 +1,20 @@
 #include "stm32f7xx.h"
 #include "stm32746g_discovery.h"
+#include <string.h>
 
 GPIO_InitTypeDef user_button_handle;
+
+UART_HandleTypeDef uart_handle;
+
+volatile char buffer;
 
 void init_user_button() {
 													// Initializing user push button:
 
-													// Step 1, enable clock for GPIO I port:
+													// Step 1, enable clock for GPIO I port
 	__HAL_RCC_GPIOI_CLK_ENABLE();
 
-													// Configure user_button_handle struct:
+													// Configure user_button_handle struct
 
 	user_button_handle.Pin = GPIO_PIN_11;
 													// Set I port's 11th pin (board blue button)
@@ -32,18 +37,52 @@ void init_user_button() {
 													// Enable interrupt for EXTI lines 15:10
 }
 
+
+
+
+void init_uart()
+													// Initializing UART communication
+{
+	__HAL_RCC_USART1_CLK_ENABLE();
+													// Enable clock for the USART1
+	uart_handle.Instance = USART1;
+													// set USART1 register
+	uart_handle.Init.BaudRate = 115200;
+	uart_handle.Init.WordLength = UART_WORDLENGTH_8B;
+													// set 8 bit word length
+	uart_handle.Init.StopBits = UART_STOPBITS_1;
+	uart_handle.Init.Parity = UART_PARITY_NONE;
+	uart_handle.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+	uart_handle.Init.Mode = UART_MODE_TX_RX;
+
+	BSP_COM_Init(COM1, &uart_handle);
+													// initializing COM1 line for USB UART emulation line (Hercules)
+	HAL_NVIC_SetPriority(USART1_IRQn, 1, 0);
+													// set priority for USART1, preempt priority 1, sub priority 0
+	HAL_NVIC_EnableIRQ(USART1_IRQn);
+													// enable interrupt for USART1
+}
+
+
+
 int main ()
 {
 	HAL_Init();
 
 		BSP_LED_Init(LED_GREEN);
 		init_user_button();
+		init_uart();
+
+		HAL_UART_Receive_IT(&uart_handle, &buffer, 1);
 
 		while (1) {
 		}
 
 		return 0;
 }
+
+/*GPIO handler and callback*/
+
 
 void EXTI15_10_IRQHandler()
 													// the name of the function must come from the startup/startup_stm32f746xx.s file,
@@ -60,4 +99,25 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			BSP_LED_Toggle(LED_GREEN);
 													// so this way, we can toggle only the the GPIO_PIN_11 from the selected EXTI15_10 (PIN 15 - 10) range
 		}
+}
+
+
+/*UART handler and callback*/
+
+
+void USART1_IRQHandler()
+													// the name of the function must come from the startup/startup_stm32f746xx.s file
+{
+	HAL_UART_IRQHandler(&uart_handle);
+													// set UART structure for the UART handler
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *husart)
+{
+	if(husart->Instance == USART1){
+													// check if the parameter UART struct is the USART1
+		BSP_LED_Toggle(LED_GREEN);
+
+		HAL_UART_Receive_IT(&uart_handle, &buffer, 1);
+	}
 }
