@@ -9,20 +9,23 @@ UART_HandleTypeDef uart_handle;
 TIM_HandleTypeDef timer_handle;
 
 #define UART_PUTCHAR int __io_putchar(int ch)
+														// preprocessor for set the printf
+														// (which is basically int __io_putchar(int ch) inside itself)
+														// check below
+
 static void Error_Handler(void);
+														// error handler not implemented yet
 static void SystemClock_Config(void);
-
-
+														// System clock is a must have for the timer initialization
 volatile char buffer;
 
-void init_user_button() {
+void init_user_button()
 														// Initializing user push button:
-
-														// Step 1, enable clock for GPIO I port
+{
+														// Enable clock for GPIO I port
 __HAL_RCC_GPIOI_CLK_ENABLE();
 
 														// Configure user_button_handle struct
-
 user_button_handle.Pin = GPIO_PIN_11;
 														// Set I port's 11th pin (board blue button)
 user_button_handle.Pull = GPIO_NOPULL;
@@ -31,7 +34,8 @@ user_button_handle.Speed = GPIO_SPEED_FAST;
 
 user_button_handle.Mode = GPIO_MODE_IT_RISING;
 														// IT = interrupt for the rising edge
-														// user_button_handle.Alternate to be set only when you use the pin for output (eg. PWM)
+														// user_button_handle.Alternate to be set only
+														// when you use the pin for output (PWM)
 														// You also need to modify the .Mode this case!
 
 HAL_GPIO_Init(GPIOI, &user_button_handle);
@@ -72,17 +76,18 @@ void init_uart()
 
 void init_timer()
 {
+	SystemClock_Config();
 	__HAL_RCC_TIM2_CLK_ENABLE();
 														// set the clock for the timer (TIM2)
 	HAL_TIM_Base_DeInit(&timer_handle);
 														// de-initialize the TIM_Base, because of safety reasons.
-														// if it's already initialized, this deinit it
+														// if it's already initialized, this step de-initialize it
 	timer_handle.Instance = TIM2;
 														// set structure for the TIM2 timer
-	timer_handle.Init.Prescaler = 54000 - 1;			// 1 / (cpu clock/prescaler value) = prescaler time unit
+	timer_handle.Init.Prescaler = 54000 - 1;			// 1 / (clock value / prescaler value) = prescaler time unit
 														// 1 / (108000000 / 54000) = 0,0005 = 0,5 ms
 
-	timer_handle.Init.Period = 1200 - 1;				// period time = prescaler time unit * period value
+	timer_handle.Init.Period = 12000 - 1;				// period time = prescaler time unit * period value
 														// period time = 0,5 ms (0,0005 s) * (12000 - 1) = 6 s
 
 	timer_handle.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -98,22 +103,34 @@ void init_timer()
 
 int main ()
 {
-	HAL_Init();
-
+			HAL_Init();
+													// at first step we have to initialize the HAL
 			BSP_LED_Init(LED_GREEN);
+													// initializing the board green led with BSP
 			init_user_button();
+													// running the user_button (GPIOI, GPIO_PIN_11) initialization
 			init_uart();
+													// running the UART initialization
 			init_timer();
+													// running the TIMER initialization, in the functions first step
+													// you run the SystemClock_Config static void function
 			HAL_TIM_Base_Start_IT(&timer_handle);
+													// this code line starts the timer in interrupt mode (IT)
+													// it's parameter is a pointer to the timer struct
+													// you set with the init_timer function
 
 			HAL_UART_Receive_IT(&uart_handle, &buffer, 1);
-
+													// this code line starts the UART communication in interrupt mode
+													// it's first parameter is a pointer to the UART struct
+													// you set with the init_uart function
+													// second parameter is a pointer to the variable you'll store the received input
+													// third parameter is the length of the previous variable
 			while (1) {
 			}
 			return 0;
 }
 
-/*GPIO handler and callback*/
+	/*GPIO handler and callback*/
 
 
 void EXTI15_10_IRQHandler()
@@ -134,7 +151,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 }
 
 
-/*UART handler and callback*/
+	/*UART handler and callback*/
 
 
 void USART1_IRQHandler()
@@ -155,7 +172,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *husart)
 }
 
 
-/*TIMER handler and callback*/
+	/*TIMER handler and callback*/
 
 
 void TIM2_IRQHandler()
@@ -173,17 +190,24 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	}
 }
 
-UART_PUTCHAR										//
+UART_PUTCHAR
+													// after this point the UART_PUTCHAR is equal
+													// with the int __io_putchar(int ch) (see it above)
 {
 	HAL_UART_Transmit(&uart_handle, (uint8_t*)&ch, 1, 0xFFFF);
 	return ch;
+													// after this code line the bulit in printf command is equal with the
+													// HAL_UART_Transmit command
 }
 
 static void Error_Handler(void)
+													// error handling is not implemented yet
 {
 }
 
-static void SystemClock_Config(void)				//
+static void SystemClock_Config(void)
+													// clock configuration for the timer,
+													// it's called in the init_timer function's first line
 {
 	RCC_OscInitTypeDef RCC_OscInitStruct =
 	{ 0 };
