@@ -2,7 +2,7 @@
 #include "stm32746g_discovery.h"
 #include <string.h>
 
-GPIO_InitTypeDef user_button_handle;
+GPIO_InitTypeDef gpio_handle;
 
 UART_HandleTypeDef uart_handle;
 
@@ -19,27 +19,30 @@ static void SystemClock_Config(void);
 														// System clock is a must have for the timer initialization
 volatile char buffer;
 
-void init_user_button()
-														// Initializing user push button:
+void init_gpio()
+														// Initializing GPIO:
 {
 														// Enable clock for GPIO I port
 __HAL_RCC_GPIOI_CLK_ENABLE();
 
-														// Configure user_button_handle struct
-user_button_handle.Pin = GPIO_PIN_11;
+														// Configure gpio_handle struct
+gpio_handle.Pin = GPIO_PIN_11;
 														// Set I port's 11th pin (board blue button)
-user_button_handle.Pull = GPIO_NOPULL;
+gpio_handle.Pull = GPIO_NOPULL;
 														// no pull-up resistor
-user_button_handle.Speed = GPIO_SPEED_FAST;
+gpio_handle.Speed = GPIO_SPEED_FAST;
 
-user_button_handle.Mode = GPIO_MODE_IT_RISING;
+gpio_handle.Mode = GPIO_MODE_IT_RISING;
 														// IT = interrupt for the rising edge
-														// user_button_handle.Alternate to be set only
+														// don't forget to set .Mode to GPIO_MODE_OUTPUT_PP
+														// if you are using this skeleton for initializing a GPIO LED!
+
+														// gpio_handle.Alternate to be set only
 														// when you use the pin for output (PWM)
 														// You also need to modify the .Mode this case!
 
-HAL_GPIO_Init(GPIOI, &user_button_handle);
-														// Initializing GPIO I port for the user_button_handle struct
+HAL_GPIO_Init(GPIOI, &gpio_handle);
+														// Initializing GPIO I port for the gpio_handle struct
 
 HAL_NVIC_SetPriority(EXTI15_10_IRQn, 3, 0);
 														// Set priority for the EXTI lines 15:10, preempt priority 4, sub priority 0
@@ -104,27 +107,27 @@ void init_timer()
 int main ()
 {
 			HAL_Init();
-													// at first step we have to initialize the HAL
+														// at first step we have to initialize the HAL
 			BSP_LED_Init(LED_GREEN);
-													// initializing the board green led with BSP
-			init_user_button();
-													// running the user_button (GPIOI, GPIO_PIN_11) initialization
+														// initializing the board green led with BSP
+			init_gpio();
+														// running GPIO instance initialization
 			init_uart();
-													// running the UART initialization
+														// running the UART initialization
 			init_timer();
-													// running the TIMER initialization, in the functions first step
-													// you run the SystemClock_Config static void function
+														// running the TIMER initialization, in the functions first step
+														// you run the SystemClock_Config static void function
 			HAL_TIM_Base_Start_IT(&timer_handle);
-													// this code line starts the timer in interrupt mode (IT)
-													// it's parameter is a pointer to the timer struct
-													// you set with the init_timer function
+														// this code line starts the timer in interrupt mode (IT)
+														// it's parameter is a pointer to the timer struct
+														// you set with the init_timer function
 
 			HAL_UART_Receive_IT(&uart_handle, &buffer, 1);
-													// this code line starts the UART communication in interrupt mode
-													// it's first parameter is a pointer to the UART struct
-													// you set with the init_uart function
-													// second parameter is a pointer to the variable you'll store the received input
-													// third parameter is the length of the previous variable
+														// this code line starts the UART communication in interrupt mode
+														// it's first parameter is a pointer to the UART struct
+														// you set with the init_uart function
+														// second parameter is a pointer to the variable you'll store the received input
+														// third parameter is the length of the previous variable
 			while (1) {
 			}
 			return 0;
@@ -134,19 +137,19 @@ int main ()
 
 
 void EXTI15_10_IRQHandler()
-													// the name of the function must come from the startup/startup_stm32f746xx.s file,
+														// the name of the function must come from the startup/startup_stm32f746xx.s file,
 {
-	HAL_GPIO_EXTI_IRQHandler(user_button_handle.Pin);
-													// set PIN from the EXTI15_10 range, for the Interrupt handler
+	HAL_GPIO_EXTI_IRQHandler(gpio_handle.Pin);
+														// set PIN from the EXTI15_10 range, for the Interrupt handler
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-													// the name of the callback function comes from the Handler function's HAL_GPIO_EXTI_IRQHandler line's function
+														// the name of the callback function comes from the Handler function's HAL_GPIO_EXTI_IRQHandler line's function
 {
-	if (GPIO_Pin == user_button_handle.Pin) {
-													// Check if the funnction's input parameter PIN is the one we defined in the struct,
+	if (GPIO_Pin == gpio_handle.Pin) {
+														// Check if the funnction's input parameter PIN is the one we defined in the struct,
 			//BSP_LED_Toggle(LED_GREEN);
-													// so this way, we can toggle only the the GPIO_PIN_11 from the selected EXTI15_10 (PIN 15 - 10) range
+														// so this way, we can toggle only the the GPIO_PIN_11 from the selected EXTI15_10 (PIN 15 - 10) range
 		}
 }
 
@@ -155,16 +158,16 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 
 
 void USART1_IRQHandler()
-													// the name of the function must come from the startup/startup_stm32f746xx.s file
+														// the name of the function must come from the startup/startup_stm32f746xx.s file
 {
 	HAL_UART_IRQHandler(&uart_handle);
-													// set UART structure for the UART handler
+														// set UART structure for the UART handler
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *husart)
 {
 	if(husart->Instance == uart_handle.Instance){
-													// check if the parameter UART struct is the USART1
+														// check if the parameter UART struct is the USART1
 		//BSP_LED_Toggle(LED_GREEN);
 
 		HAL_UART_Receive_IT(&uart_handle, &buffer, 1);
@@ -176,10 +179,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *husart)
 
 
 void TIM2_IRQHandler()
-													// the name of the function must come from the startup/startup_stm32f746xx.s file
+														// the name of the function must come from the startup/startup_stm32f746xx.s file
 {
 	HAL_TIM_IRQHandler(&timer_handle);
-													// set timer_handle structure for the TIM2 handler
+														// set timer_handle structure for the TIM2 handler
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
@@ -191,23 +194,23 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 }
 
 UART_PUTCHAR
-													// after this point the UART_PUTCHAR is equal
-													// with the int __io_putchar(int ch) (see it above)
+														// after this point the UART_PUTCHAR is equal
+														// with the int __io_putchar(int ch) (see it above)
 {
 	HAL_UART_Transmit(&uart_handle, (uint8_t*)&ch, 1, 0xFFFF);
 	return ch;
-													// after this code line the bulit in printf command is equal with the
-													// HAL_UART_Transmit command
+														// after this code line the bulit in printf command is equal with the
+														// HAL_UART_Transmit command
 }
 
 static void Error_Handler(void)
-													// error handling is not implemented yet
+														// error handling is not implemented yet
 {
 }
 
 static void SystemClock_Config(void)
-													// clock configuration for the timer,
-													// it's called in the init_timer function's first line
+														// clock configuration for the timer,
+														// it's called in the init_timer function's first line
 {
 	RCC_OscInitTypeDef RCC_OscInitStruct =
 	{ 0 };
