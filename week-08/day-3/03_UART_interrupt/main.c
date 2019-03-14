@@ -115,10 +115,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *husart) {
 			if (strcmp(one_line, "flash") == 0) {
 				INPUT = flash;
 			} else if (strcmp(one_line, "on") == 0) {
-				printf("%d %s\n", index_counter, one_line);
 				INPUT = on;
 			} else if (strcmp(one_line, "off") == 0) {
-				printf("%d %s\n", index_counter, one_line);
 				INPUT = off;
 			}
 		}
