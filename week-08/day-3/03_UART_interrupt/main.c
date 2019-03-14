@@ -1,7 +1,6 @@
 #include "stm32f7xx.h"
 #include "stm32746g_discovery.h"
 #include <string.h>
-
 #define UART_PUTCHAR int __io_putchar(int ch)
 
 TIM_HandleTypeDef timer_handle;
@@ -18,11 +17,10 @@ volatile int index_counter = 0;
 volatile char single_char;
 volatile char one_line[6];
 volatile input_t INPUT = flash;
+volatile char buffer;
 
 static void Error_Handler(void);
 static void SystemClock_Config(void);
-
-volatile char buffer;
 
 void init_timer() {
 	SystemClock_Config();
@@ -149,7 +147,6 @@ static void SystemClock_Config(void) {
 	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
 		Error_Handler();
 	}
-
 	if (HAL_PWREx_EnableOverDrive() != HAL_OK) {
 		Error_Handler();
 	}
