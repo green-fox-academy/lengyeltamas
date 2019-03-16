@@ -34,6 +34,7 @@ int main()
 
     printf("The number of cars, older than 6 years are: %d\n", get_cars_older_than(car_array, 3, 7));
     printf("The number of cars with manual transmission are: %d\n", get_transmission_count(car_array, 3, manual));
-
+    free(car_array);
+    // de-allocate memory
     return 0;
 }
