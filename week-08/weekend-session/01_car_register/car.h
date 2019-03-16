@@ -13,7 +13,7 @@ typedef enum {
 } transmission_t;
 
 typedef struct {
-    char manufacturer_name[256];
+    char* manufacturer_name;
     float price_of_car;
     int year_of_manufacture;
     transmission_t transmission;

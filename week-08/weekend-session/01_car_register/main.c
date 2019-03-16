@@ -31,7 +31,7 @@ int main()
     car_t* car_array[3] = {car1, car2, car3};
 
     printf("The number of cars, older than 6 years are: %d\n", get_cars_older_than(car_array, 3, 6));
-
+    printf("The number of cars with manual transmission are: %d\n", get_transmission_count(car_array, 3, manual));
 
     return 0;
 }
