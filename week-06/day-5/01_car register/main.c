@@ -18,16 +18,6 @@ typedef struct
     transmission_t transmission;
 } car_t ;
 
-typedef struct {
-    car_t name [256];
-    car_t price;
-    car_t year;
-    car_t transmission;
-    char color[20];
-    int length;
-} something_t;
-
-
 int get_older_cars_than(car_t* array, int array_length, int age);
 
 int get_transmission_count(car_t* array, int array_length, transmission_t transmission);
@@ -53,9 +43,6 @@ int main()
     car3.price = 15000;
     car3.year = 2017;
     car3.transmission = AUTOMATIC;
-
-    something_t car4;
-    car4.
 
     car_t car_array[3] = {car1, car2, car3};
 
