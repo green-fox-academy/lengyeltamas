@@ -2,7 +2,7 @@
 #include "stm32746g_discovery.h"
 #define UART_PUTCHAR int __io_putchar(int ch)
 
-GPIO_InitTypeDef gpio_handle;
+GPIO_InitTypeDef user_button_gpio_handle;
 UART_HandleTypeDef uart_handle;
 TIM_HandleTypeDef LED_timer_handle;
 TIM_HandleTypeDef period_timer_handle;
@@ -12,21 +12,19 @@ typedef enum {
 } system_state_t;
 
 volatile system_state_t STATE = OPEN;
-volatile u_int8_t open_state_counter = 0;
-volatile u_int8_t counter_securing_length = 0;
-volatile u_int8_t counter_opening_length = 0;
+volatile u_int8_t counter = 0;
 
 static void Error_Handler(void);
 static void SystemClock_Config(void);
 
-void init_gpio()
+void init_user_button_gpio()
 {
 	__HAL_RCC_GPIOI_CLK_ENABLE();
-	gpio_handle.Pin = GPIO_PIN_11;
-	gpio_handle.Pull = GPIO_NOPULL;
-	gpio_handle.Speed = GPIO_SPEED_FAST;
-	gpio_handle.Mode = GPIO_MODE_IT_RISING;
-	HAL_GPIO_Init(GPIOI, &gpio_handle);
+	user_button_gpio_handle.Pin = GPIO_PIN_11;
+	user_button_gpio_handle.Pull = GPIO_NOPULL;
+	user_button_gpio_handle.Speed = GPIO_SPEED_FAST;
+	user_button_gpio_handle.Mode = GPIO_MODE_IT_RISING;
+	HAL_GPIO_Init(GPIOI, &user_button_gpio_handle);
 	HAL_NVIC_SetPriority(EXTI15_10_IRQn, 2, 0);
 	HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 }
@@ -40,7 +38,7 @@ void init_uart() {
 	uart_handle.Init.StopBits = UART_STOPBITS_1;
 	uart_handle.Init.Parity = UART_PARITY_NONE;
 	uart_handle.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-	uart_handle.Init.Mode = UART_MODE_TX_RX;
+	uart_handle.Init.Mode = UART_MODE_TX;
 	BSP_COM_Init(COM1, &uart_handle);
 }
 
@@ -75,30 +73,31 @@ int main() {
 	HAL_Init();
 	SystemClock_Config();
 	BSP_LED_Init(LED_GREEN);
-	init_gpio();
+	init_user_button_gpio();
 	init_uart();
 	init_LED_timer();
 	init_period_timer();
 	HAL_TIM_Base_Start_IT(&LED_timer_handle);
+	printf("Entered in OPEN state /click to enter SECURING state/\n");
 	while (1) {
 	}
 	return 0;
 }
 void EXTI15_10_IRQHandler()
 {
-	HAL_GPIO_EXTI_IRQHandler(gpio_handle.Pin);
+	HAL_GPIO_EXTI_IRQHandler(user_button_gpio_handle.Pin);
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
-	if (GPIO_Pin == gpio_handle.Pin) {
+	if (GPIO_Pin == user_button_gpio_handle.Pin) {
 		if (STATE == OPEN){
 			STATE = SECURING;
-			printf("Entered in SECURING state\n");
+			printf("Entered in SECURING state /5 seconds until SECURED state/\n");
 			HAL_TIM_Base_Start_IT(&period_timer_handle);
 		} else if (STATE == SECURED) {
 			STATE = OPENING;
-			printf("Entered in OPENING state\n");
+			printf("Entered in OPENING state /6 seconds until OPEN state/\n");
 			HAL_TIM_Base_Start_IT(&period_timer_handle);
 		}
 	}
@@ -114,30 +113,30 @@ void TIM3_IRQHandler() {
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	if (htim->Instance == LED_timer_handle.Instance) {
-		if (STATE == OPEN && open_state_counter == 1) {
+		if (STATE == OPEN && counter == 1) {
 			BSP_LED_Toggle(LED_GREEN);
-			open_state_counter = 0;
+			counter = 0;
 		} else if (STATE == OPEN) {
-			open_state_counter++; }
+			counter++; }
 		else if (STATE == SECURING || STATE == OPENING){
 			BSP_LED_Toggle(LED_GREEN);
 		} else if(STATE == SECURED){
 			BSP_LED_Off(LED_GREEN);
 		}
 	} else if (htim->Instance == period_timer_handle.Instance) {
-		if (STATE == SECURING && open_state_counter == 5) {
-			open_state_counter = 0;
+		if (STATE == SECURING && counter == 5) {
+			counter = 0;
 			STATE = SECURED;
 			HAL_TIM_Base_Stop_IT(&period_timer_handle);
-			printf("Entered in SECURED state, click to enter OPENING state\n");
+			printf("Entered in SECURED state /click to enter OPENING state/\n");
 		} else if (STATE == SECURING) {
-			open_state_counter++; }
-		 else if (STATE == OPENING && open_state_counter == 6) {
-			open_state_counter = 0;
+			counter++; }
+		 else if (STATE == OPENING && counter == 6) {
+			 counter = 0;
 			STATE = OPEN;
-			printf("Entered in OPEN state, click to enter SECURING state\n");
+			printf("Entered in OPEN state /click to enter SECURING state/\n");
 		 } else if (STATE == OPENING) {
-			open_state_counter++;}
+			 counter++;}
 	}
 }
 
