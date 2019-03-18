@@ -71,7 +71,6 @@ void init_period_timer() {
 	HAL_NVIC_EnableIRQ(TIM3_IRQn);
 }
 
-
 int main() {
 	HAL_Init();
 	SystemClock_Config();
@@ -81,17 +80,7 @@ int main() {
 	init_LED_timer();
 	init_period_timer();
 	HAL_TIM_Base_Start_IT(&LED_timer_handle);
-	// NOT FINISHED YET!
 	while (1) {
-		if (STATE == OPEN) {
-
-		} else if (STATE == SECURING){
-
-		} else if (STATE == SECURED) {
-
-		} else if (STATE == OPENING) {
-
-		}
 	}
 	return 0;
 }
@@ -139,15 +128,16 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 		if (STATE == SECURING && open_state_counter == 5) {
 			open_state_counter = 0;
 			STATE = SECURED;
-			printf("Entered in SECURED state\t\t// some time later a click comes\n");
+			HAL_TIM_Base_Stop_IT(&period_timer_handle);
+			printf("Entered in SECURED state, click to enter OPENING state\n");
 		} else if (STATE == SECURING) {
 			open_state_counter++; }
 		 else if (STATE == OPENING && open_state_counter == 6) {
 			open_state_counter = 0;
 			STATE = OPEN;
-			printf("Entered in OPEN state\t\t// some time later a click comes\n");
+			printf("Entered in OPEN state, click to enter SECURING state\n");
 		 } else if (STATE == OPENING) {
-			open_state_counter++; }
+			open_state_counter++;}
 	}
 }
 
@@ -167,11 +157,9 @@ static void SystemClock_Config(void)
 	RCC_ClkInitTypeDef RCC_ClkInitStruct =
 	{ 0 };
 
-	/**Configure the main internal regulator output voltage */
 	__HAL_RCC_PWR_CLK_ENABLE();
 	__HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
 
-	/**Initializes the CPU, AHB and APB busses clocks */
 	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
 	RCC_OscInitStruct.HSIState = RCC_HSI_ON;
 	RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
@@ -186,12 +174,10 @@ static void SystemClock_Config(void)
 		Error_Handler();
 	}
 
-	/**Activate the Over-Drive mode */
 	if (HAL_PWREx_EnableOverDrive() != HAL_OK) {
 		Error_Handler();
 	}
 
-	/**Initializes the CPU, AHB and APB busses clocks */
 	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
 	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
 	RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
