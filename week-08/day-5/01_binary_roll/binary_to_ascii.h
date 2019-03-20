@@ -5,9 +5,9 @@
 #include <stdlib.h>
 #include "binary_to_ascii.h"
 
-void binary_file_reader(char* input_file_path);
+char* binary_file_reader(char* input_file_path);
 
-int binary_to_ASCII(int binary_number);
+int binary_to_decimal(int binary_number);
 
 int file_character_counter(char* file_path);
 

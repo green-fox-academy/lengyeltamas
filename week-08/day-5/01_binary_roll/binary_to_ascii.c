@@ -1,30 +1,33 @@
 #include "binary_to_ascii.h"
 
-void binary_file_reader (char* input_file_path)
+char* binary_file_reader (char* input_file_path)
 {
     int number;
+    char word[10];
     int array_length = file_character_counter(input_file_path);
     char buffer_array[array_length];
-    FILE *input_file_pointer;
-    input_file_pointer = fopen(input_file_path, "r");
+    FILE *input_file_pointer = fopen(input_file_path, "r");
     while (!feof(input_file_pointer)){
         fgets(buffer_array, array_length, input_file_pointer);
     }
     fclose(input_file_pointer);
+    char *text_array = (char*)malloc(sizeof(int) * array_length);
+    input_file_pointer = fopen(input_file_path, "r");
+    while(!feof(input_file_pointer)){
+        fgets(text_array, array_length, input_file_pointer);
+    }
     char* one_word = strtok(buffer_array, " ");
-    char word[10];
-    strcpy(word, one_word);
-    number = atoi(word);
-    printf("%c", binary_to_ASCII(one_word));
     while(one_word != NULL){
-        one_word = strtok(NULL, " \0");
         strcpy(word, one_word);
         number = atoi(word);
-        printf("%c", binary_to_ASCII(number));
+        printf("%c", binary_to_decimal(number));
+        one_word = strtok(NULL, " \0");
     }
+    fclose(input_file_pointer);
+    return text_array;
 }
 
-int binary_to_ASCII(int binary_number)
+int binary_to_decimal(int binary_number)
 {
    int decimal_value = 0;
    int base = 1;
