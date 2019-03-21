@@ -19,6 +19,7 @@ int main()
     if (input_file_pointer == NULL) {
         printf("File can't be opened");
     }
+    char buffer[1000];
     char time_array[16][11];
     int in_out_amounts_in_timeslot[16][2];
     int i = 0;
@@ -28,10 +29,12 @@ int main()
     int customer_left = 0;
 
     while(!feof(input_file_pointer)){
-        fscanf(input_file_pointer, "%s %s", time_stamp, in_out_temp);
-        for (int j = 0; j < 11; ++j) {
+        fgets(buffer, 1000, input_file_pointer);
+        //fscanf(input_file_pointer, "%s %s", time_stamp, in_out_temp);
+        /*for (int j = 0; j < 11; ++j) {
             time_array[i][j] = time_stamp[j];
         }
+                // f*ck this sh*t
         char *token = strtok(in_out_temp, " ");
         while( token != NULL ) {
             int value = atoi(token);
@@ -44,11 +47,11 @@ int main()
         }
         in_out_amounts_in_timeslot[i][0] = customer_left;
         in_out_amounts_in_timeslot[i][1] = customer_enters;
-        i++;
+        i++;*/
     }
     fclose(input_file_pointer);
 
-    printf("");
+    printf("%s", buffer);
 
     return 0;
 }
