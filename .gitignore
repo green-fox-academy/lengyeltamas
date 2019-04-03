@@ -69,6 +69,17 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
+# CubeMX embedded files
+Drivers/
+startup/
+Utilities/
+*.cproject
+*.mxproject
+.project
+CMakeLists_template.txt
+STM32F746NGHx_FLASH.ld
+syscalls.c
+
 ### CLion Patch ###
 # Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
 
