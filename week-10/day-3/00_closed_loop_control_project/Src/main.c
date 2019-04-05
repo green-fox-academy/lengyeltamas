@@ -1,34 +1,22 @@
 #include "stm32f7xx.h"
 #include "stm32746g_discovery.h"
 #include <string.h>
+#include <stdlib.h>
 
 GPIO_InitTypeDef potentiometer_gpio_handle;
 ADC_HandleTypeDef adc_handle;
 ADC_ChannelConfTypeDef adc_channel_config;
 
 GPIO_InitTypeDef motor_control_gpio_handle;
-
 TIM_HandleTypeDef motor_pwm_timer_handle;
 TIM_OC_InitTypeDef motor_PWM_sConfig;
 
 UART_HandleTypeDef uart_handle;
 
-volatile char buffer;
-
+//volatile char buffer[4];
 static void Error_Handler(void);
 static void SystemClock_Config(void);
-
 volatile int adc_val;
-
-typedef enum {
-    on, off
-} input_t;
-
-volatile int index_counter = 0;
-volatile char single_char;
-volatile char one_line[6];
-volatile input_t INPUT = on;
-volatile char buffer;
 
 void init_potentiometer_handle()
 {
@@ -76,7 +64,7 @@ void init_motor_control_PWM_timer() {
     HAL_TIM_PWM_ConfigChannel(&motor_pwm_timer_handle, &motor_PWM_sConfig, TIM_CHANNEL_1);
 }
 
-void init_uart()
+/*void init_uart()
 {
     // UART receive is not finished yet!
     __HAL_RCC_USART1_CLK_ENABLE();
@@ -91,8 +79,7 @@ void init_uart()
     BSP_COM_Init(COM1, &uart_handle);
     HAL_NVIC_SetPriority(USART1_IRQn, 2, 0);
     HAL_NVIC_EnableIRQ(USART1_IRQn);
-}
-
+}*/
 
 int main()
 {
@@ -102,21 +89,18 @@ int main()
     init_motor_control_PWM_timer();
     HAL_TIM_PWM_Start(&motor_pwm_timer_handle, TIM_CHANNEL_1);
     init_potentiometer_handle();
-    init_uart();
-    HAL_UART_Receive_IT(&uart_handle, &single_char, 1);
+    //init_uart();
+    //HAL_UART_Receive_IT(&uart_handle, &buffer, 4);
     while (1) {
-
-        if (INPUT == on) {
             HAL_ADC_Start(&adc_handle);
             if (HAL_ADC_PollForConversion(&adc_handle, 10) == HAL_OK) {
                 adc_val = (HAL_ADC_GetValue(&adc_handle));
                 __HAL_TIM_SET_COMPARE(&motor_pwm_timer_handle, TIM_CHANNEL_1, adc_val + 14);
             }
-        }
     }
 }
 
-void USART1_IRQHandler()
+/*void USART1_IRQHandler()
 {
     HAL_UART_IRQHandler(&uart_handle);
 }
@@ -124,29 +108,11 @@ void USART1_IRQHandler()
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *husart)
 {
     if(husart->Instance == uart_handle.Instance){
-        if (single_char != '\n' && index_counter < sizeof(one_line) - 1) {
-            one_line[index_counter] = single_char;
-            index_counter++;
-        }  else if (INPUT == off) {
-            while (HAL_UART_Receive(&uart_handle, (uint8_t *) &single_char, 1,
-                                    HAL_MAX_DELAY) == HAL_OK) {
-                if (single_char != '\n' && index_counter < sizeof(one_line) - 1) {
-                    one_line[index_counter] = single_char;
-                    index_counter++;
-                } else {
-                    one_line[index_counter] = '\0';
-                    if (strcmp(one_line, "STOP") == 0) {
-                        HAL_ADC_Start(&adc_handle);
-                    } else if (strcmp(one_line, "START") == 0){
-                        HAL_ADC_Start(&adc_handle);
-                    }
-                }
-            }
-        }
-        HAL_UART_Receive_IT(&uart_handle, &single_char, 1);
-        INPUT = on;
+        int request = atoi(buffer);
+        __HAL_TIM_SET_COMPARE(&motor_pwm_timer_handle, TIM_CHANNEL_1, request);
+        HAL_UART_Receive_IT(&uart_handle, &buffer, 4);
     }
-}
+}*/
 
 static void Error_Handler(void)
 {
