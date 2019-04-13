@@ -91,5 +91,8 @@ syscalls.c
 # Sonarlint plugin
 .idea/sonarlint
 
+# 0th week exercises
+week-00/
+
 # End of https://www.gitignore.io/api/clion
 .idea/
